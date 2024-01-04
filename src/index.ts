@@ -126,7 +126,10 @@ export class MicrosoftRewardsBot {
     // Desktop
     async Desktop(account: Account) {
         const browser = await this.browserFactory.createBrowser(account.email, account.proxy)
+        const customUA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0")
         this.homePage = await browser.newPage()
+        await this.homePage.setUserAgent(customUA) 
+        log('MAIN', 'Set DesktopUA!')
         let pages = await browser.pages()
 
         // If for some reason the browser initializes with more than 2 pages, close these
@@ -137,6 +140,7 @@ export class MicrosoftRewardsBot {
 
         // Log into proxy
         await this.homePage.authenticate({ username: account.proxy.username, password: account.proxy.password })
+        await this.homePage.setUserAgent(customUA) 
 
         log('MAIN', 'Starting DESKTOP browser')
 
@@ -161,6 +165,7 @@ export class MicrosoftRewardsBot {
 
         // Open a new tab to where the tasks are going to be completed
         const workerPage = await browser.newPage()
+        await workerPage.setUserAgent(customUA) 
 
         // Go to homepage on worker page
         await this.browser.func.goHome(workerPage)
@@ -194,7 +199,10 @@ export class MicrosoftRewardsBot {
         this.isMobile = true
 
         const browser = await this.browserFactory.createBrowser(account.email, account.proxy)
+        const customUA = ('Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36 EdgA/120.0.0.0')
         this.homePage = await browser.newPage()
+        await this.homePage.setUserAgent(customUA) 
+        log('MAIN', 'Set MobileUA!')
         let pages = await browser.pages()
 
         // If for some reason the browser initializes with more than 2 pages, close these
@@ -204,6 +212,7 @@ export class MicrosoftRewardsBot {
         }
         // Log into proxy
         await this.homePage.authenticate({ username: account.proxy.username, password: account.proxy.password })
+        await this.homePage.setUserAgent(customUA) 
 
         log('MAIN', 'Starting MOBILE browser')
 
@@ -223,6 +232,7 @@ export class MicrosoftRewardsBot {
 
         // Open a new tab to where the tasks are going to be completed
         const workerPage = await browser.newPage()
+        await workerPage.setUserAgent(customUA) 
 
         // Go to homepage on worker page
         await this.browser.func.goHome(workerPage)
